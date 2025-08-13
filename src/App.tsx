@@ -3,7 +3,6 @@ import { SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { Routes, Route } from "react-router-dom";
 import { isMobile } from "react-device-detect";
-import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import routes from "./data/routes";
 import { NavigationBar, Content, Navigation } from "./components/layouts";
@@ -23,14 +22,12 @@ export default function App() {
         backgroundImage: "url(/assets/images/noise-background.jpg)",
       }}
     >
-      <Helmet>
-        <title>{t("meta.title", { name: githubUser.data.name })}</title>
-        <link
-          rel="icon"
-          type="image/svg+xml"
-          href={githubUser.data.avatar_url}
-        />
-      </Helmet>
+    <title>{t("meta.title", { name: githubUser.data.name })}</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href={githubUser.data.avatar_url}
+    />
       {isMobile ? (
         <p className="paragraph">
           This webpage currently doesn't support mobile view.

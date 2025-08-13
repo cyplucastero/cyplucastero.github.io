@@ -22,12 +22,8 @@ export default function App() {
         backgroundImage: "url(/assets/images/noise-background.jpg)",
       }}
     >
-    <title>{t("meta.title", { name: githubUser.data.name })}</title>
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href={githubUser.data.avatar_url}
-    />
+      <title>{t("meta.title", { name: githubUser.data.name })}</title>
+      <link rel="icon" type="image/svg+xml" href={githubUser.data.avatar_url} />
       {isMobile ? (
         <p className="paragraph">
           This webpage currently doesn't support mobile view.

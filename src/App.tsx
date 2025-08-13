@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import gsap from "gsap";
+import { SplitText } from "gsap/all";
+import { useGSAP } from "@gsap/react";
+import { Routes, Route } from "react-router-dom";
+import { isMobile } from "react-device-detect";
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
+import routes from "./data/routes";
+import { NavigationBar, Content, Navigation } from "./components/layouts";
+import { useGithubUser } from "./hooks";
+import { GITHUB_USERNAME } from "./constants";
 
-function App() {
-  const [count, setCount] = useState(0)
+gsap.registerPlugin(useGSAP, SplitText);
+
+export default function App() {
+  const [t] = useTranslation();
+  const githubUser = useGithubUser(GITHUB_USERNAME);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+    <div
+      className="h-screen w-screen overflow-auto bg-cover bg-center px-10 text-stone-50"
+      style={{
+        backgroundImage: "url(/assets/images/noise-background.jpg)",
+      }}
+    >
+      <Helmet>
+        <title>{t("meta.title", { name: githubUser.data.name })}</title>
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href={githubUser.data.avatar_url}
+        />
+      </Helmet>
+      {isMobile ? (
+        <p className="paragraph">
+          This webpage currently doesn't support mobile view.
+          <br />
+          We suggest you view this on a desktop.
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      ) : (
+        <>
+          <NavigationBar />
+          <Content>
+            <Routes>
+              {routes.map((route) => (
+                <Route
+                  index={route.path === "/"}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))}
+            </Routes>
+          </Content>
+          <Navigation />
+        </>
+      )}
+    </div>
+  );
 }
-
-export default App

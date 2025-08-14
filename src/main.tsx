@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import i18n from "./utils/i18n.ts";
 import { I18nextProvider } from "react-i18next";
 import "./index.css";
@@ -16,11 +16,11 @@ createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
-        <BrowserRouter>
+        <HashRouter>
           <I18nextProvider i18n={i18n} defaultNS={["common", "views"]}>
             <App />
           </I18nextProvider>
-        </BrowserRouter>
+        </HashRouter>
       </ErrorBoundary>
     </QueryClientProvider>
   </StrictMode>,

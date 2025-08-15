@@ -8,19 +8,12 @@ import routes from "./data/routes";
 import { NavigationBar, Content, Navigation } from "./components/layouts";
 import { useGithubUser } from "./hooks";
 import { GITHUB_USERNAME } from "./constants";
-import { useEffect } from "react";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
 export default function App() {
   const [t] = useTranslation();
   const githubUser = useGithubUser(GITHUB_USERNAME);
-
-  useEffect(() => {
-    routes.map(route => {
-      console.log(route.element.type);
-    })
-  },[])
   
   return (
     <div

@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 
 type UseOutsideClickReturn<E> = [(ref: E) => E, boolean];
 
-function useOutsideClick<E extends HTMLElement = HTMLElement>(): UseOutsideClickReturn<E> {
+function useOutsideClick<
+  E extends HTMLElement | null = HTMLElement,
+>(): UseOutsideClickReturn<E> {
   const elementRef = useRef<E>(null);
   const [isOutsideClick, setIsOutsideClick] = useState(false);
 
@@ -19,7 +21,7 @@ function useOutsideClick<E extends HTMLElement = HTMLElement>(): UseOutsideClick
   });
 
   function assignRef(ref: E) {
-    return elementRef.current = ref;
+    return (elementRef.current = ref);
   }
 
   return [assignRef, isOutsideClick];

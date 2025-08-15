@@ -11,7 +11,7 @@ export default function LanguageButton() {
   const buttonContainerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [assignRef, isOutsideClick] =
-    useOutsideClick<NonNullable<typeof buttonContainerRef.current>>();
+    useOutsideClick<typeof buttonContainerRef.current>();
   const [menuDisplayed, setMenuDisplayed] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function LanguageButton() {
     if (menuDisplayed) {
       gsap.to("#transparent-black", {
         ...tweenVars,
-        opacity: 0.4,
+        opacity: 0.5,
       });
       gsap.fromTo(
         buttonRef.current,
@@ -37,8 +37,8 @@ export default function LanguageButton() {
         },
         {
           ...tweenVars,
-          borderBottomRightRadius: 8,
-          scale: 1.1,
+          borderBottomRightRadius: 10,
+          scale: 1.13,
         },
       );
       gsap.to("#language-menu", {
@@ -91,33 +91,26 @@ export default function LanguageButton() {
           className="flex origin-top-right scale-100 items-center rounded-4xl bg-stone-50 px-3 py-2 text-black"
         >
           <GlobeAltIcon className="size-6" />
-          <p className="paragraph ml-2 text-[21px]">{t("language")}</p>
+          <p className="paragraph ml-2 text-[22px]">{t("language")}</p>
         </button>
         <div
           id="language-menu"
           className={cn(
-            "absolute top-12 right-0 w-64 origin-top-right scale-80 rounded-3xl rounded-tr-sm bg-stone-50 p-1 text-black opacity-0",
+            "absolute top-12 right-0 w-64 origin-top-right scale-80 rounded-3xl rounded-tr-md bg-stone-50 p-1 text-black opacity-0",
             !menuDisplayed && "pointer-events-none",
           )}
         >
-          <button
-            onClick={() => handleChangeLanguage("en")}
-            className="flex w-full items-center space-x-2 rounded-[22px] p-3 text-sm transition-colors duration-200 hover:bg-black/5"
-          >
-            <CheckIcon
-              className={cn("size-6", i18n.language !== "en" && "invisible")}
-            />
-            <p className="paragraph">English</p>
-          </button>
-          <button
-            onClick={() => handleChangeLanguage("fr")}
-            className="flex w-full items-center space-x-2 rounded-[22px] p-3 text-sm transition-colors duration-200 hover:bg-black/5"
-          >
-            <CheckIcon
-              className={cn("size-6", i18n.language !== "fr" && "invisible")}
-            />
-            <p className="paragraph">Français</p>
-          </button>
+          {i18n.languages.map((lng) => (
+            <button
+              onClick={() => handleChangeLanguage(lng)}
+              className="flex w-full items-center space-x-2 rounded-[22px] p-3 text-sm transition-colors duration-200 first:rounded-tr-md hover:bg-black/5"
+            >
+              <CheckIcon
+                className={cn("size-6", i18n.language !== lng && "invisible")}
+              />
+              <p className="paragraph">{t("language", { lng })}</p>
+            </button>
+          ))}
         </div>
       </div>
     </>
